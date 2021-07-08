@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_tdd_clean/data/http/http.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 
@@ -29,6 +30,10 @@ class HttpAdapter implements HttpClient {
   Map _handleResponse(Response response) {
     if (response.statusCode == 200) {
       return response.body.isEmpty ? null : jsonDecode(response.body);
+    } else if (response.statusCode == 204) {
+      return null;
+    } else {
+      throw HttpError.badRequest;
     }
     return null;
   }
