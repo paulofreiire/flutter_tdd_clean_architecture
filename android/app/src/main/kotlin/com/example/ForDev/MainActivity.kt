@@ -1,4 +1,4 @@
-package com.paulofreire.flutter_tdd_clean
+package com.example.ForDev
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -179,10 +179,10 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  infra.http:
+  http:
     dependency: "direct main"
     description:
-      name: infra.http
+      name: http
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.13.3"
