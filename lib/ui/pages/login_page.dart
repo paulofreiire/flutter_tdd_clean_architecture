@@ -41,7 +41,7 @@ class LoginPage extends StatelessWidget {
                     ElevatedButton(
                       style: TextButton.styleFrom(
                           backgroundColor: Theme.of(context).primaryColor),
-                      onPressed: () {},
+                      onPressed: null,
                       child: Text('Entrar'.toUpperCase()),
                     ),
                     TextButton.icon(
