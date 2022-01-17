@@ -16,33 +16,45 @@ class LoginPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             LoginHeader(),
-            Headline1(text: 'Login',),
+            Headline1(
+              text: 'Login',
+            ),
             Padding(
               padding: const EdgeInsets.all(32.0),
               child: Form(
                 child: Column(
                   children: <Widget>[
-                    TextFormField(
-                      decoration: InputDecoration(
-                          labelText: 'Email',
-                          icon: Icon(
-                            Icons.email,
-                            color: Theme.of(context).primaryColorLight,
-                          )),
-                      keyboardType: TextInputType.emailAddress,
-                      onChanged: presenter.validateEmail,
-                    ),
+                    StreamBuilder<String>(
+                        stream: presenter.emailErrorStream,
+                        builder: (context, snapshot) {
+                          return TextFormField(
+                            decoration: InputDecoration(
+                                errorText: snapshot.data?.isEmpty == true ? null : snapshot.data,
+                                labelText: 'Email',
+                                icon: Icon(Icons.email,
+                                    color:
+                                        Theme.of(context).primaryColorLight)),
+                            keyboardType: TextInputType.emailAddress,
+                            onChanged: presenter.validateEmail,
+                          );
+                        }),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0, bottom: 32),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            labelText: 'Senha',
-                            icon: Icon(
-                              Icons.lock,
-                              color: Theme.of(context).primaryColorLight,
-                            )),
-                        obscureText: true,
-                        onChanged: presenter.validatePassword,
+                      child: StreamBuilder<String>(
+                        stream: presenter.passwordErrorStream,
+                        builder: (context, snapshot) {
+                          return TextFormField(
+                            decoration: InputDecoration(
+                                errorText: snapshot.data?.isEmpty == true ? null : snapshot.data,
+                                labelText: 'Senha',
+                                icon: Icon(
+                                  Icons.lock,
+                                  color: Theme.of(context).primaryColorLight,
+                                )),
+                            obscureText: true,
+                            onChanged: presenter.validatePassword,
+                          );
+                        }
                       ),
                     ),
                     ElevatedButton(
@@ -68,5 +80,3 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-
-
