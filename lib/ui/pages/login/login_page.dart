@@ -29,7 +29,9 @@ class LoginPage extends StatelessWidget {
                         builder: (context, snapshot) {
                           return TextFormField(
                             decoration: InputDecoration(
-                                errorText: snapshot.data?.isEmpty == true ? null : snapshot.data,
+                                errorText: snapshot.data?.isEmpty == true
+                                    ? null
+                                    : snapshot.data,
                                 labelText: 'Email',
                                 icon: Icon(Icons.email,
                                     color:
@@ -41,28 +43,34 @@ class LoginPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0, bottom: 32),
                       child: StreamBuilder<String>(
-                        stream: presenter.passwordErrorStream,
+                          stream: presenter.passwordErrorStream,
+                          builder: (context, snapshot) {
+                            return TextFormField(
+                              decoration: InputDecoration(
+                                  errorText: snapshot.data?.isEmpty == true
+                                      ? null
+                                      : snapshot.data,
+                                  labelText: 'Senha',
+                                  icon: Icon(
+                                    Icons.lock,
+                                    color: Theme.of(context).primaryColorLight,
+                                  )),
+                              obscureText: true,
+                              onChanged: presenter.validatePassword,
+                            );
+                          }),
+                    ),
+                    StreamBuilder<bool>(
+                        stream: presenter.isFormValidController,
                         builder: (context, snapshot) {
-                          return TextFormField(
-                            decoration: InputDecoration(
-                                errorText: snapshot.data?.isEmpty == true ? null : snapshot.data,
-                                labelText: 'Senha',
-                                icon: Icon(
-                                  Icons.lock,
-                                  color: Theme.of(context).primaryColorLight,
-                                )),
-                            obscureText: true,
-                            onChanged: presenter.validatePassword,
+                          return ElevatedButton(
+                            style: TextButton.styleFrom(
+                                backgroundColor:
+                                    Theme.of(context).primaryColor),
+                            onPressed: snapshot.data == true ? () {} : null,
+                            child: Text('Entrar'.toUpperCase()),
                           );
-                        }
-                      ),
-                    ),
-                    ElevatedButton(
-                      style: TextButton.styleFrom(
-                          backgroundColor: Theme.of(context).primaryColor),
-                      onPressed: null,
-                      child: Text('Entrar'.toUpperCase()),
-                    ),
+                        }),
                     TextButton.icon(
                       style: TextButton.styleFrom(
                           primary: Theme.of(context).primaryColor),
