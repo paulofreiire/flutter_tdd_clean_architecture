@@ -30,8 +30,8 @@ void main() {
         .thenAnswer((realInvocation) => passwordErrorController.stream);
     when(presenter.mainErrorStream)
         .thenAnswer((realInvocation) => mainErrorController.stream);
-    when(presenter.isLoadingStream)
-        .thenAnswer((realInvocation) => isLoadingController.stream);
+    when(presenter.isFormValidStream)
+        .thenAnswer((realInvocation) => isFormValidController.stream);
     when(presenter.isLoadingStream)
         .thenAnswer((realInvocation) => isLoadingController.stream);
     final loginPage = MaterialApp(home: LoginPage(presenter));
