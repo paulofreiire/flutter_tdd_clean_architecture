@@ -61,13 +61,14 @@ class LoginPage extends StatelessWidget {
                           }),
                     ),
                     StreamBuilder<bool>(
-                        stream: presenter.isFormValidController,
+                        stream: presenter.isFormValidStream,
                         builder: (context, snapshot) {
                           return ElevatedButton(
                             style: TextButton.styleFrom(
                                 backgroundColor:
                                     Theme.of(context).primaryColor),
-                            onPressed: snapshot.data == true ? () {} : null,
+                            onPressed:
+                                snapshot.data == true ? presenter.auth : null,
                             child: Text('Entrar'.toUpperCase()),
                           );
                         }),
