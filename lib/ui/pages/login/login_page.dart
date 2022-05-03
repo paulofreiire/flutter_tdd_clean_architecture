@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tdd_clean/ui/components/components.dart';
+import 'package:flutter_tdd_clean/ui/components/error_snackbar.dart';
 import 'package:flutter_tdd_clean/ui/components/headline1.dart';
 import 'package:flutter_tdd_clean/ui/pages/pages.dart';
 import '../../components/login_header.dart';
@@ -26,11 +27,7 @@ class _LoginPageState extends State<LoginPage> {
         });
 
         widget.presenter.mainErrorStream.listen((error) {
-          if (error != null)
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: Colors.red[900],
-              content: Text(error),
-            ));
+          if (error != null) showErrorMessage(context, error);
         });
 
         return SingleChildScrollView(
