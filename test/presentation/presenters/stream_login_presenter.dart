@@ -1,12 +1,13 @@
 import 'package:faker/faker.dart';
+import 'package:mockito/mockito.dart';
+import 'package:test/test.dart';
 
 import 'package:flutter_tdd_clean/domain/entities/entities.dart';
+import 'package:flutter_tdd_clean/domain/helpers/domain_error.dart';
 import 'package:flutter_tdd_clean/domain/usecases/usecases.dart';
 
 import 'package:flutter_tdd_clean/presentation/presenters/presenters.dart';
 import 'package:flutter_tdd_clean/presentation/protocols/protocols.dart';
-import 'package:mockito/mockito.dart';
-import 'package:test/test.dart';
 
 class ValidationSpy extends Mock implements Validation {}
 
@@ -32,6 +33,10 @@ void main() {
   void mockAuthentication() {
     mockAuthenticationCall()
         .thenAnswer((_) async => AccountEntity(token: faker.guid.guid()));
+  }
+
+  void mockAuthenticationError(DomainError error) {
+    mockAuthenticationCall().thenThrow(error);
   }
 
   setUp(() {
@@ -129,5 +134,36 @@ void main() {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
     await sut.auth();
+  });
+
+  test('Should emit correct events on InvalidCredentialsError', () async {
+    mockAuthenticationError(DomainError.invalidCredentials);
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+
+    expectLater(sut.isLoadingStream, emits(false));
+    sut.mainErrorStream.listen(
+        expectAsync1((error) => expect(error, "Credenciais inválidas")));
+
+    await sut.auth();
+  });
+
+  test('Should emit correct events on UnexpectedError', () async {
+    mockAuthenticationError(DomainError.unexpected);
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+
+    expectLater(sut.isLoadingStream, emits(false));
+    sut.mainErrorStream.listen(expectAsync1(
+        (error) => expect(error, "Algo errado aconteceu. Tente novamente")));
+
+    await sut.auth();
+  });
+
+  test('Should not emit after dispose', () async {
+    expectLater(sut.emailErrorStream, neverEmits(null));
+
+    sut.dispose();
+    sut.validateEmail(email);
   });
 }
