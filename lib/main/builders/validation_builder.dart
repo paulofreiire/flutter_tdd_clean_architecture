@@ -10,7 +10,7 @@ class ValidationBuilder {
 
   ValidationBuilder._();
 
-  ValidationBuilder field(fieldName) {
+  static ValidationBuilder field(fieldName) {
     _instance = ValidationBuilder._();
     _instance.fieldName = fieldName;
     return _instance;
