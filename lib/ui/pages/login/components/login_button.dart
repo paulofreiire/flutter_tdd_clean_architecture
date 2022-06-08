@@ -12,7 +12,7 @@ class LoginButton extends StatelessWidget {
           style: TextButton.styleFrom(
               backgroundColor: Theme.of(context).primaryColor),
           onPressed:
-              presenter.isFormValid.value == true ? presenter.auth : null,
+              presenter.isFormValid?.value == true ? presenter.auth : null,
           child: Text('Entrar'.toUpperCase()),
         ));
   }

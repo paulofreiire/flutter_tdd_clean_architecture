@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:faker/faker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -134,9 +132,9 @@ void main() {
     sut.validateEmail(email);
     sut.validatePassword(password);
 
-    expectLater(sut.isFormValid.stream, emitsInOrder([true, false]));
+    expectLater(sut.isLoading.stream, emitsInOrder([true, false]));
     sut.mainError.listen(
-        expectAsync1((error) => expect(error, "Credenciais inválidas")));
+        expectAsync1((error) => expect(error, 'Credenciais inválidas')));
 
     await sut.auth();
   });
