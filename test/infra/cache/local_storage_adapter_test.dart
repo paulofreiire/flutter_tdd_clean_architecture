@@ -32,11 +32,6 @@ void main() {
   });
 
   test("Should call save secure with correct values", () async {
-    final secureStorage = FlutterSecureStorageSpy();
-    final sut = LocalStorageAdapter(secureStorage: secureStorage);
-    final key = faker.lorem.word();
-    final value = faker.guid.guid();
-
     await sut.saveSecure(key: key, value: value);
 
     verify(secureStorage.write(key: key, value: value));
