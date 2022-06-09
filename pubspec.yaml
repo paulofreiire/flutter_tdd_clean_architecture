@@ -15,6 +15,7 @@ dependencies:
   http:
   equatable:
   get:
+  flutter_secure_storage:
 
 dev_dependencies:
   flutter_test:

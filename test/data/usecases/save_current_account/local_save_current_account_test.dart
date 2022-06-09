@@ -1,32 +1,13 @@
 import 'package:faker/faker.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:test/test.dart';
 
 import 'package:flutter_tdd_clean/domain/entities/entities.dart';
 import 'package:flutter_tdd_clean/domain/helpers/helpers.dart';
-import 'package:flutter_tdd_clean/domain/usecases/usecases.dart';
 
-class LocalSaveCurrentAccount implements SaveCurrentAccount {
-  final SaveSecureCacheStorage saveSecureCacheStorage;
+import 'package:flutter_tdd_clean/data/cache/cache.dart';
+import 'package:flutter_tdd_clean/data/usecases/usecases.dart';
 
-  LocalSaveCurrentAccount({@required this.saveSecureCacheStorage});
-
-  Future<void> save(AccountEntity account) async {
-    try {
-      await saveSecureCacheStorage.saveSecure(
-          key: 'token', value: account.token);
-      print("bbbbbbb");
-    } catch (error) {
-      print("aaaaaaaaaa");
-      throw DomainError.unexpected;
-    }
-  }
-}
-
-abstract class SaveSecureCacheStorage {
-  Future<void> saveSecure({String key, String value});
-}
 
 class SaveSecureCacheStorageSpy extends Mock implements SaveSecureCacheStorage {
 }
@@ -44,9 +25,8 @@ void main() {
   });
 
   void mockError() {
-    print("??????");
     when(saveSecureCacheStorage.saveSecure(
-            key: anyNamed('value'), value: anyNamed('value')))
+            key: anyNamed('key'), value: anyNamed('value')))
         .thenThrow(Exception());
   }
 
