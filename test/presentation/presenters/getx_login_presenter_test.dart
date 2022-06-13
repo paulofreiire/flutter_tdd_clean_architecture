@@ -158,9 +158,8 @@ void main() {
     sut.validateEmail(email);
     sut.validatePassword(password);
 
-    expectLater(sut.isLoading.stream, emitsInOrder([true, false]));
-
-    await sut.auth();
+    expectLater(sut.isLoading.stream, emits(true));
+    sut.auth();
   });
 
   test('Should emit correct events on InvalidCredentialsError', () async {
