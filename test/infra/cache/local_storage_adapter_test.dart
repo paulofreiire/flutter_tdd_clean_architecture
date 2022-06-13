@@ -5,7 +5,6 @@ import 'package:test/test.dart';
 
 import 'package:flutter_tdd_clean/infra/cache/cache.dart';
 
-
 class FlutterSecureStorageSpy extends Mock implements FlutterSecureStorage {}
 
 void main() {
@@ -22,7 +21,8 @@ void main() {
   });
 
   void mockSaveSecureError() {
-    when(secureStorage.write(key: anyNamed('key'), value: anyNamed('value'))).thenThrow(Exception());
+    when(secureStorage.write(key: anyNamed('key'), value: anyNamed('value')))
+        .thenThrow(Exception());
   }
 
   test("Should call save secure with correct values", () async {
